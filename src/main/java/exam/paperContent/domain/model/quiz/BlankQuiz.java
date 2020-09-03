@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -19,25 +20,33 @@ public class BlankQuiz implements Entity<BlankQuiz> {
         this.answers = answers;
     }
 
-    public BlankQuiz build(BlankQuizId blankQuizId,String topic, List<String> answers) {
-        if (StringUtils.isBlank(topic)){
-                try {
-                    throw new IllegalTopicException();
-                } catch (IllegalTopicException e) {
-                    e.printStackTrace();
-                    return null;
-                }
+    public static BlankQuiz build(BlankQuizId blankQuizId, String topic, List<String> answers) {
+        if (StringUtils.isBlank(topic)) {
+            try {
+                throw new IllegalTopicException();
+            } catch (IllegalTopicException e) {
+                e.printStackTrace();
+                return null;
+            }
         }
-        if (CollectionUtils.isEmpty(answers)){
-                try {
-                    throw new IllegalAnswersCountException();
-                } catch (IllegalAnswersCountException e) {
-                    e.printStackTrace();
-                    return null;
-                }
+        if (CollectionUtils.isEmpty(answers)) {
+            try {
+                throw new IllegalAnswersCountException();
+            } catch (IllegalAnswersCountException e) {
+                e.printStackTrace();
+                return null;
+            }
         }
-        return  new BlankQuiz(blankQuizId, topic,answers);
+        return new BlankQuiz(blankQuizId, topic, answers);
     }
 
 
+    public void rebuild(String topic, List<String> ansewers) {
+        if (StringUtils.isNotBlank(topic)) {
+            this.topic = topic;
+        }
+        if (CollectionUtils.isNotEmpty(ansewers)) {
+            this.answers = ansewers;
+        }
+    }
 }

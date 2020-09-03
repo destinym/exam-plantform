@@ -7,5 +7,4 @@ public interface BlankQuizRepository {
 
     void save(BlankQuiz blankQuiz);
 
-    BlankQuizId nextBlankQuizId();
 }
